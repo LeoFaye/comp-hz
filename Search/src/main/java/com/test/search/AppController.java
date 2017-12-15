@@ -36,9 +36,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.test.search.common.IndexCriteria;
+import com.test.search.common.User;
 import com.test.search.component.ElasticsearchComponent;
-import com.test.search.doc.IndexCriteria;
-import com.test.search.doc.User;
 import com.test.search.service.SearchService;
 
 import freemarker.template.Configuration;

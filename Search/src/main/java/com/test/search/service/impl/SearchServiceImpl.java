@@ -19,10 +19,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
+import com.test.search.common.IndexCriteria;
+import com.test.search.common.Pagination;
+import com.test.search.common.User;
 import com.test.search.component.ElasticsearchComponent;
-import com.test.search.doc.IndexCriteria;
-import com.test.search.doc.Pagination;
-import com.test.search.doc.User;
 import com.test.search.service.SearchService;
 
 @Service

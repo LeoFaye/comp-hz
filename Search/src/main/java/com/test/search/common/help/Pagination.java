@@ -1,4 +1,4 @@
-package com.test.search.common;
+package com.test.search.common.help;
 
 import java.io.Serializable;
 

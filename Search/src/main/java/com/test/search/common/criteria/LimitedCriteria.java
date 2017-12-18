@@ -1,4 +1,4 @@
-package com.test.search.common;
+package com.test.search.common.criteria;
 
 public class LimitedCriteria {
 	private Long rowNum;

@@ -7,8 +7,7 @@
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>  
 <style>
-	.create-index{background-color:blue; padding:10px;}
-	.left div{margin-top:15px;}
+	
 </style>
 
 <script>
@@ -19,10 +18,14 @@ $(function(){
 			$("#form1").attr("action", "http://localhost:8080/index/delete").submit();
 		} else if (t.hasClass("index-create")) {
 			$("#form1").attr("action", "http://localhost:8080/index/create").submit();
-		} else if (t.hasClass("index-add")) {
-			$("#form1").attr("action", "http://localhost:8080/index/add").submit();
-		} else {
+		} else if (t.hasClass("index-search")) {
 			$("#form1").attr("action", "http://localhost:8080/index/search").submit();
+		} else if (t.hasClass("mapping-create")) {
+			$("#form2").attr("action", "http://localhost:8080/mapping/create").submit();
+		} else if (t.hasClass("data-index")) {
+			$("#form2").attr("action", "http://localhost:8080/data/index").submit();
+		} else if () {
+			location.href = http://localhost:8080/view/mapping/{index}
 		}
 	});
 	$("input").on("keydown", function(event) {
@@ -39,14 +42,18 @@ $(function(){
 	
 	
 		<div class="col-xs-offset-2 col-xs-8">
+			<div class="btn-group" role="group" aria-label="..." style="margin-bottom:10px;">
+				<button class="btn btn-success view-mapping" type="button">View Mapping</button>
+				<button class="btn btn-success view-indices" type="button">View Indices</button>
+			</div>
+		
 			<form id="form1" action="" method="post">
 				<div class="input-group">
-					<input class="form-control" name="input">
+					<input class="form-control" name="index">
 					<div class="input-group-btn">
-						<button class="btn btn-warning index-delete" type="button">Delete Index</button>
-						<button class="btn btn-warning index-create" type="button">Create Index</button>
-						<button class="btn btn-warning index-add" type="button">Add Index</button>
-						<button class="btn btn-warning search" type="button">Search</button>
+						<button class="btn btn-danger index-delete" type="button">Delete Index</button>
+						<button class="btn btn-primary index-create" type="button">Create Index</button>
+						<button class="btn btn-default index-search" type="button">Search</button>
 					</div>
 				</div>
 			</form>
@@ -59,13 +66,16 @@ $(function(){
 						<input class="form-control" name="type" placeholder="type">
 					</div>
 					<div class="col-xs-2">
-						<button class="btn btn-warning set-mapping">Set Mapping</button>
+						<button class="btn btn-warning mapping-create">Set Mapping</button>
+					</div>
+					<div class="col-xs-2">
+						<button class="btn btn-success data-index" type="button">Index</button>
 					</div>
 				</div>
 			</form>
 		</div>
 	
-		<div class="col-xs-offset-2 col-xs-8" style="margin-top:15px;">
+		<div class="col-xs-offset-2 col-xs-8 content" style="margin-top:15px;">
 			<#if manageUsers ??>
 			<table class="table table-bordered">
 				<thead>
@@ -85,6 +95,9 @@ $(function(){
 					</#list>
 				</tbody>
 			</table>
+		</#if>
+		<#if res ??>
+			${res}
 		</#if>
 		</div>
 	

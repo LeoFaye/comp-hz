@@ -1,8 +1,8 @@
 package com.test.search.controller;
 
+import org.elasticsearch.action.admin.indices.get.GetIndexResponse;
 import org.elasticsearch.action.admin.indices.mapping.get.GetFieldMappingsRequestBuilder;
 import org.elasticsearch.action.admin.indices.mapping.get.GetFieldMappingsResponse;
-import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.client.transport.TransportClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,6 +50,26 @@ public class IndexController {
 		GetFieldMappingsResponse res = prepareGetFieldMappings.get();
 		model.addAttribute("res", res.mappings().toString());
 		EsUtils.closeClient(client);
+		return "index";
+	}
+	
+	/**
+	 * 查看已有的索引库
+	 * @author LeoHe
+	 * @date 2017年12月18日 下午5:53:45
+	 */
+	@GetMapping("/view/indices")
+	public String viewIndices(Model model) {
+		TransportClient client = EsUtils.getClient();
+		GetIndexResponse res = client.admin().indices().prepareGetIndex().get();
+		String[] indices = res.getIndices();
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < indices.length; i++) {
+			sb.append(indices[i]).append(", ");
+		}
+		if (sb.length() > 0) {
+			model.addAttribute("index", sb.substring(0, sb.length()-1));
+		}
 		return "index";
 	}
 	

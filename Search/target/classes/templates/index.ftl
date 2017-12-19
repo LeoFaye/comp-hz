@@ -99,6 +99,9 @@ $(function(){
 		<#if res ??>
 			${res}
 		</#if>
+		<#if index ??>
+			<span style="font-weight:bold;">[ ${index} ]</span>
+		</#if>
 		</div>
 	
 </div>

@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.test.search.canal.CanalClient;
 import com.test.search.common.User;
 import com.test.search.common.criteria.IndexCriteria;
 
@@ -205,5 +206,6 @@ public class AppController {
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(AppController.class, args);
+        //new Thread(new CanalClient()).start(); //canal获取同步的信息
     }
 }

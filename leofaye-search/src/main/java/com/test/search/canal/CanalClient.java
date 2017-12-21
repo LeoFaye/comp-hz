@@ -19,8 +19,15 @@ import com.alibaba.otter.canal.protocol.Message;
  * @author LeoHe
  * @date 2017年12月20日 下午4:56:40
  */
-public class client {
-	public static void main(String[] args) {
+public class CanalClient implements Runnable {
+	
+	/**
+	 * @author LeoHe
+	 * @date 2017年12月21日 上午10:44:53
+	 * @see java.lang.Runnable#run()
+	 */
+	@Override
+	public void run() {
 		// 创建链接
 	    CanalConnector connector = CanalConnectors
 	    		.newSingleConnector(new InetSocketAddress(AddressUtils.getHostIp(), 11111), "example", "", "");
@@ -38,10 +45,11 @@ public class client {
 	            if (batchId == -1 || size == 0) {
 	                emptyCount++;
 	                System.out.println("empty count : " + emptyCount);
-	                try {
+	                //System.out.println("----------现在是什么都没有获取啊--------");
+	                /*try {
 	                    Thread.sleep(1000);
 	                } catch (InterruptedException e) {
-	                }
+	                }*/
 	            } else {
 	                emptyCount = 0;
 	                // System.out.printf("message[batchId=%s,size=%s] \n", batchId, size);
@@ -56,6 +64,7 @@ public class client {
 	    } finally {
 	        connector.disconnect();
 	    }
+		
 	}
 	
 	private static void printEntry(List<Entry> entrys) {

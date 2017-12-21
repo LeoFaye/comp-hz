@@ -61,6 +61,12 @@
 	    <artifactId>gson</artifactId>
 	</dependency>
 	
+	<dependency>
+	    <groupId>com.alibaba.otter</groupId>
+	    <artifactId>canal.client</artifactId>
+	    <version>1.0.24</version>
+	</dependency>
+	
 	</dependencies>
 	
 	

@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Implementation-Title: Search
+Implementation-Title: leofaye-search
 Implementation-Version: 0.0.1-SNAPSHOT
 Built-By: leohe
 Implementation-Vendor-Id: com.test

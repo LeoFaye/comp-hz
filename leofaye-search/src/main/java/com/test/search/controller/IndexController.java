@@ -1,5 +1,7 @@
 package com.test.search.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.elasticsearch.action.admin.indices.get.GetIndexResponse;
 import org.elasticsearch.action.admin.indices.mapping.get.GetFieldMappingsRequestBuilder;
 import org.elasticsearch.action.admin.indices.mapping.get.GetFieldMappingsResponse;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.test.search.common.criteria.IndexCriteria;
 import com.test.search.common.help.Result;
+import com.test.search.common.help.ResultCode;
 import com.test.search.service.IndexService;
 import com.test.search.util.EsUtils;
 
@@ -28,14 +31,31 @@ public class IndexController {
 	@Autowired
 	IndexService indexServiceImpl;
 	
+	public static Long successNum = null;
+		
 	/**
-	 * 首页
+	 * 创建索引首页
 	 * @author LeoHe
 	 * @date 2017年12月18日 下午4:38:06
 	 */
-	@GetMapping("/index")
-	public String index() {
-		return "index";
+	@GetMapping("/index/create")
+	public String index(Model model, HttpServletRequest request) {
+		
+		// 展示所有索引方格
+		Integer batchNum = indexServiceImpl.queryIndexBatch();
+		model.addAttribute("batchNum", batchNum);
+		
+		
+		// 查询已存在的索引库
+		TransportClient client = EsUtils.getClient();
+		GetIndexResponse res = client.admin().indices().prepareGetIndex().get();
+		String[] indices = res.getIndices();
+		model.addAttribute("indices", indices);
+		
+		
+		// 成功的绿色方格
+		model.addAttribute("successNum", successNum);
+		return "index-create";
 	}
 	
 	/**
@@ -80,9 +100,12 @@ public class IndexController {
 	 */
 	@PostMapping("/index/delete")
 	public String deleteIndex(IndexCriteria c, Model model, RedirectAttributes att) {
-		boolean result = EsUtils.deleteIndex(c.getIndex());
-		Result.handleResult(result, model, att);
-		return "index";
+		if(c.getIndices() != null && !c.getIndices().isEmpty()) {
+			c.getIndices().forEach(i->EsUtils.deleteIndex(i));
+			att.addFlashAttribute("result", new Result(ResultCode.SUCCESS, "操作成功"));
+			return "redirect:/index/create";
+		}
+		return "index-create";
 	}
 	
 	/**
@@ -116,8 +139,14 @@ public class IndexController {
 	 */
 	@PostMapping("/data/index")
 	public String index(IndexCriteria c, Model model, RedirectAttributes att) {
-		boolean result = indexServiceImpl.index(c.getIndex(), c.getType());
-		Result.handleResult(result, model, att);
-		return "index";
+		Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				boolean result = indexServiceImpl.index(c.getIndex(), c.getType());
+				Result.handleResult(result, model, att);
+			}
+		});
+		thread.start();
+		return "redirect:/index/create";
 	}
 }

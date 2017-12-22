@@ -19,6 +19,7 @@ import org.springframework.util.StringUtils;
 import com.test.search.common.User;
 import com.test.search.common.criteria.IndexCriteria;
 import com.test.search.common.help.Pagination;
+import com.test.search.controller.IndexController;
 import com.test.search.service.IndexService;
 import com.test.search.util.EsUtils;
 
@@ -73,11 +74,26 @@ public class IndexServiceImpl implements IndexService {
 							}
 						});
 					}
+					// 每次建索引都记录当前批次数字
+					IndexController.successNum = i;
 				}
 				EsUtils.closeClient(client);
 				return true;
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * 查询索引批次数
+	 * @author LeoHe
+	 * @date 2017年12月22日 上午11:17:01
+	 * @see com.test.search.service.IndexService#queryIndexBatch()
+	 */
+	@Override
+	public Integer queryIndexBatch() {
+		Long count = jdbc.queryForObject("select count(1) from `user`", Long.class);
+		int totalPages = new Pagination("", count, 1, 50).getTotalPages();
+		return totalPages;
 	}
 }

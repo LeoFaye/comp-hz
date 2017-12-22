@@ -21,7 +21,7 @@ $(function(){
   
 <div class="container" style="margin-top:10px;">
 	
-	<form action="http://localhost:8080/user/add" method="post" modelAttribute="User">
+	<form action="${url}/user/add" method="post" modelAttribute="User">
 	
 		
 		

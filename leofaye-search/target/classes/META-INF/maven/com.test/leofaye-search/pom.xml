@@ -62,6 +62,11 @@
 	</dependency>
 	
 	<dependency>
+		<groupId>redis.clients</groupId>
+		<artifactId>jedis</artifactId>
+	</dependency>
+	
+	<dependency>
 	    <groupId>com.alibaba.otter</groupId>
 	    <artifactId>canal.client</artifactId>
 	    <version>1.0.24</version>
@@ -89,6 +94,11 @@
 			    <groupId>com.google.code.gson</groupId>
 			    <artifactId>gson</artifactId>
 			    <version>2.2.4</version>
+			</dependency>
+			<dependency>
+				<groupId>redis.clients</groupId>
+				<artifactId>jedis</artifactId>
+				<version>2.7.3</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
